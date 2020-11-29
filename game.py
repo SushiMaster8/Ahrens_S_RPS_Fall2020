@@ -1,29 +1,47 @@
 # import packages to extend python (just like we extend sublime, or Atom, or VSCode)
-from random import randint
+#from random import randint
 
-# [] => this is an array. an array is a special type of container that can hold multiple items
-#arrays are indexed (their contents get assigned a number)
-# the index starts at 0
-choices = ["rock", "paper", "scissors"]
+#reimport our game variables
+from gameComponents import gameVars, winLose, gameChoices
 
-player = input("choose rock, paper, or scissors: ")
+#set up our game loop
+while gameVars.player is False:
+	#this is the gameVars.player choice
+	print("@@@@} THE GREAT ROCK PAPER SCISSORS SHOWDOWN {@@@@")
+	print("@                                                @")
+	print("@             Computer Lives:", gameVars.computer_lives, "/", gameVars.total_lives, "             @")
+	print("@               Player Lives:", gameVars.player_lives, "/", gameVars.total_lives, "             @")		
+	print("@                                                @")
+	print("@  CHOOSE YOUR WEAPON! or type quit to exit      @")
+	print("@                                                @")
+	print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+	gameVars.player = input("choose rock, paper, or scissors: \n")
 
-# this will be the AI choice -> a random pick from the choices array
-computer = choices[randint(0, 2)]
+	# if the player chooses to quit, then don't do anything else
+	# just exit the process (kill python) and quit the game
+	if gameVars.player == "quit":
+		print("YOU QUIT? WOW, JUST LIKE EVERYTHING ELSE IN YOUR LIFE....")
+		exit()
 
-#check to see what the user input
+	# this will be the AI choice -> a random pick from the choices array
+	#gameVars.computer = gameVars.choices[randint(0, 2)]
 
-# print outputs whatever is in the round brackets -> in this case it outputs player to the command print window
-print("user chose: " + player)
+	
 
-#validate that the random choice worked for AI
-print("AI chose: " + computer)
+	# print outputs whatever is in the round brackets -> in this case it outputs gameVars.player to the command print window
+	print("YOU CHOSE: " + gameVars.player)
 
-if (computer == player): 
-	print("tie")
+	#validate that the random choice worked for AI
+	#print("COMPUTER CHOSE: " + gameVars.computer)
 
-elif (computer == "rock"):
-	if (player =="scissors"):
-		print("YOU LOSE, HOLD THIS L CLOWN!")
-	if (player =="paper"):
-		print("OK FINE YOU WIN... PLAY ME AGAIN SEE WHAT HAPPENS")
+	gameChoices.choices(gameVars.player)
+
+	#check player lives and AI lives
+	if gameVars.player_lives == 0:
+		winLose.winorlose("lost")
+
+	elif gameVars.computer_lives == 0:
+		winLose.winorlose("won")
+
+	else: 
+		gameVars.player = False
